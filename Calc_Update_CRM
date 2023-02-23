@@ -1,0 +1,41 @@
+void Calc_Update_CRM(int update_id)
+{
+	property = Financial_Calculations[ID == update_id];
+	//Search for property's existing CRM Record 
+	crm_record = zoho.crm.searchRecords("PropertyDatabase","Name:equals:" + property.Name);
+	for each  record in crm_record
+	{
+		id = record.get("id").toLong();
+		propertyFields = Map();
+		//First Form Section
+		propertyFields.put("Name",property.Name);
+		propertyFields.put("Asking_Price",property.Asking_Price);
+		propertyFields.put("Property_Type",property.Property_Type);
+		propertyFields.put("Square_Feet",property.Square_Feet);
+		//Second Form Section
+		propertyFields.put("Year_Built",property.Year_Built);
+		propertyFields.put("Rehab_Level_per_Sqft",property.Rehab_Level_per_Sqft);
+		propertyFields.put("STRDailyValue",property.STRDailyValue);
+		propertyFields.put("STROccupancyPercentage",property.STROccupancyPercentage);
+		propertyFields.put("Resale_Value",property.Resale_Value);
+		propertyFields.put("Rental_Value",property.Rental_Value);
+		propertyFields.put("Rehab_Estimate",property.Rehab_Estimate);
+		//Third Form Section
+		propertyFields.put("NOI",property.NOI);
+		//Fourth Form Section
+		propertyFields.put("Listing_Price",property.Listing_Price);
+		propertyFields.put("MaxBidWholesalerRound",property.MaxBidWholesalerRound);
+		propertyFields.put("Cap_Rate",property.Cap_Rate);
+		propertyFields.put("MaxBidBuilderRound",property.MaxBidBuilderRound);
+		propertyFields.put("MaxBidRenovator",property.MaxBidRenovator);
+		propertyFields.put("MV_Minus_Repairs_Repairs_Round",property.MV_Minus_Repairs_Repairs_Round);
+		propertyFields.put("MaxBidRentalSTR",property.MaxBidRentalSTR);
+		propertyFields.put("Short_Term_Gross_Yield",property.Short_Term_Gross_Yield);
+		propertyFields.put("Trad_Gross_Rental_Yield",property.Trad_Gross_Rental_Yield);
+		propertyFields.put("All_in_2_ARV",property.All_in_2_ARV);
+		update = zoho.crm.updateRecord("PropertyDatabase",id,propertyFields);
+		info property;
+	}
+	info update_id;
+	info id;
+}
