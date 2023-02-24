@@ -1,0 +1,68 @@
+//Gets Records from Property Database
+Recs = zoho.crm.getRecordById("PropertyDatabase",Property_ID);
+//Gets Cap Rate Formula Field
+Cap = Recs.get("Cap_Rate");
+//Gets Listing Price Formula Field
+Listing = Recs.get("Listing_Price");
+//Gets Max Bid Rental STR Formula Field
+BidRental = Recs.get("MaxBidRentalSTR");
+//Gets Max Bid Renovator Formula Field
+BidRenovator = Recs.get("MaxBidRenovator70Round");
+//Gets Max Bid Builder Formula Field
+BidBuilder = Recs.get("Max_Builder_Round");
+//Gets Owner User Formula Field
+BidOwner = Recs.get("MV_Minus_Repairs_Repairs_Round");
+//Checks to see if cap rate is empty
+if(Cap != null)
+{
+	//Moves Cap Rate to Cap Rate2
+	move = Map();
+	moveString = Cap.toString();
+	move.put("Cap_Rate2",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
+//Checks to see if Listing Price is empty
+if(Listing != null)
+{
+	//Moves Listing Price to :Listing Price2
+	move = Map();
+	moveString = Listing.toString();
+	move.put("Listing_Price2",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
+//Checks to see if Max Bid Rental STR is empty
+if(BidRental != null)
+{
+	//Moves Max Bid Rental STR to Max Bid Rental STR 2
+	move = Map();
+	moveString = BidRental.toString();
+	move.put("Max_Bid_Rental_STR2",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
+//Checks to see if Max Bid Renovator 70 is empty
+if(BidRenovator != null)
+{
+	//Moves Max ax Bid Renovator 70 to Max Bid Renovator 
+	move = Map();
+	moveString = BidRenovator.toString();
+	move.put("Max_Bid_Renovator",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
+//Checks to see if Max Builder is empty
+if(BidBuilder != null)
+{
+	//Moves Max Builder to Max Bid Builder
+	move = Map();
+	moveString = BidBuilder.toString();
+	move.put("MaxBidBuilderRound",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
+//Checks to see if Owner User Round is empty
+if(BidOwner != null)
+{
+	//Moves Max Builder to Max Bid Builder
+	move = Map();
+	moveString = BidOwner.toString();
+	move.put("Owner_User_Round",moveString);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
