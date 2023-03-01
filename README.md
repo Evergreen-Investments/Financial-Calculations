@@ -24,7 +24,7 @@ Please refer to this code (https://github.com/Evergreen-Investments/Financial-Ca
 ![image](https://user-images.githubusercontent.com/124835926/222198968-c580a22b-1941-4410-ad23-c462cbbf4b11.png)
 
 5. Then we do the same process, and move the single line to currency and decimal fields
-Please refer to this code ()
+Please refer to this code (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Single_Line_to_Currency)
 
 ## Diagrams
 ![image](https://user-images.githubusercontent.com/124835926/222197348-4e4345c7-dee7-4b3c-8778-b48abf006c9a.png)
