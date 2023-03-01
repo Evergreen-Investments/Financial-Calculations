@@ -1,0 +1,70 @@
+if(Name != Null)
+{
+	related_record = New_Property_Analysis[ID == input.Name];
+	input.Property_Type = related_record.Property_Type;
+	input.Square_Feet = related_record.Square_Feet;
+	input.Asking_Price = related_record.Asking_Price;
+	input.Resale_Value = related_record.Resale_Value;
+	input.Rental_Value = related_record.Rental_Value;
+	input.Rehab_Estimate = related_record.Rehab_Estimate;
+	input.Rehab_Level_per_Sqft = related_record.Rehab_Level_per_Sqft;
+	input.STRDailyValue = related_record.STRDailyValue;
+	input.STROccupancyPercentage = related_record.STROccupancyPercentage;
+	input.Year_Built = related_record.Year_Built;
+	input.NOI = related_record.NOI;
+	input.PropertyDatabase_Record = related_record.PropertyDatabase_Record;
+	input.CRM_Property_ID = related_record.CRM_Property_ID;
+	//Listing Price Calculation
+	if(input.Asking_Price >= 101000)
+	{
+		input.Asking_Price = related_record.Asking_Price;
+		listing = input.Asking_Price * 1.04;
+		input.Listing_Price = listing;
+	}
+	else if(input.Asking_Price < 101000)
+	{
+		input.Asking_Price = related_record.Asking_Price;
+		listing = input.Asking_Price + 5000;
+		input.Listing_Price = listing;
+	}
+	//Max Bid builder
+	builder = (.2 * input.Resale_Value) / (1.07 * input.Asking_Price) * 100000;
+	input.MaxBidBuilderRound = builder;
+	//Max bid rennovator
+	renovator = (input.Rehab_Estimate + 1.07 * input.Asking_Price) / input.Resale_Value * 100000;
+	input.MaxBidRenovator = renovator;
+	//Gross rental Yield
+	Yield = abs((12 * input.Rental_Value - input.Rehab_Estimate) / input.Listing_Price);
+	input.Trad_Gross_Rental_Yield = Yield;
+	//Short-Term Rental GrossYield
+	sRental = (input.STROccupancyPercentage * 365 * input.STRDailyValue - input.Rehab_Estimate) / input.Listing_Price;
+	input.Short_Term_Gross_Yield = sRental;
+	//Max Bid Rental STR
+	if(input.Asking_Price >= 101000)
+	{
+		var = 365 * input.STROccupancyPercentage;
+		var2 = 1.07 * input.Asking_Price;
+		strCalc = var * input.STRDailyValue;
+		strCalc2 = input.Rehab_Estimate + var2;
+		Rental = ceil(strCalc / strCalc2 * 1000000);
+		input.MaxBidRentalSTR = Rental;
+	}
+	else if(input.Asking_Price < 101000)
+	{
+		var = 365 * input.STROccupancyPercentage;
+		var2 = 1.07 * input.Asking_Price;
+		strCalc = var * input.STRDailyValue;
+		strCalc2 = input.Rehab_Estimate + var2;
+		Rental = ceil(strCalc / strCalc2 * 100000);
+		input.MaxBidRentalSTR = Rental;
+	}
+	//NOI Calculation
+	if(input.NOI != null)
+	{
+		rate = input.NOI / input.Listing_Price;
+		input.Cap_Rate = rate;
+	}
+	//All in arv
+	calcARV = (input.Listing_Price + input.Rehab_Estimate) / input.Resale_Value;
+	input.All_in_2_ARV = calcARV;
+}
