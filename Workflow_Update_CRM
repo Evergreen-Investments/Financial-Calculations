@@ -1,2 +1,3 @@
 thisapp.Calc_Update_CRM(input.ID);
-success message input.ID;
+success message "CRM has been updated";
+
