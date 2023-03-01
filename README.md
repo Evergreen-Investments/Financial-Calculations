@@ -4,7 +4,7 @@ The finacial calculator calculates certain fields and autpopulates them within t
 
 ## Solution Creation
 1. We first created a form that looks up the property from the property analysis form using a function
-Please Refer to this (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Auto_Populate_Fields)
+Please refer to this code (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Auto_Populate_Fields)
 
 ![image](https://user-images.githubusercontent.com/124835926/222195816-f9397fda-bfc4-4b0b-9f8d-459a2c957f58.png)
 ![image](https://user-images.githubusercontent.com/124835926/222196642-df889df6-a136-4c76-aad3-9e69114bb7c6.png)
@@ -14,7 +14,8 @@ Please Refer to this (https://github.com/Evergreen-Investments/Financial-Calcula
 ![image](https://user-images.githubusercontent.com/124835926/222196785-d35077ec-8b2b-4b3f-a755-c32bdf51f16a.png)
 ![image](https://user-images.githubusercontent.com/124835926/217661572-f643a7c4-f320-4b5b-8dac-94f7d6562d54.png)
 
-3.After it's submitted we created a function that updates the CRM 
+3.After it's submitted we created a function that updates the CRM
+Please refer to this code (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Calc_Update_CRM)
 ![image](https://user-images.githubusercontent.com/124835926/222197183-fcf1ea71-d544-4b29-90c3-b4d4cf2fb653.png)
 
 ## Diagrams
