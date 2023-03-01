@@ -4,6 +4,7 @@ The finacial calculator calculates certain fields and autpopulates them within t
 
 ## Solution Creation
 1. We first created a form that looks up the property from the property analysis form using a function
+Please Refer to this (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Auto_Populate_Fields)
 
 ![image](https://user-images.githubusercontent.com/124835926/222195816-f9397fda-bfc4-4b0b-9f8d-459a2c957f58.png)
 ![image](https://user-images.githubusercontent.com/124835926/222196642-df889df6-a136-4c76-aad3-9e69114bb7c6.png)
