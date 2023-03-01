@@ -20,7 +20,8 @@ Please refer to this code (https://github.com/Evergreen-Investments/Financial-Ca
 
 4.Then in order to populate the property database module in the CRM we created a function that moves all values
 from the formula fields to single line fields
-Please refer to this code (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Formula_to_Single_Line.txt)
+Please refer to this code 
+(https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Formula_to_Single_Line.txt)
 ![image](https://user-images.githubusercontent.com/124835926/222198968-c580a22b-1941-4410-ad23-c462cbbf4b11.png)
 
 5. Then we do the same process, and move the single line to currency and decimal fields
