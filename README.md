@@ -18,6 +18,12 @@ Please refer to this code (https://github.com/Evergreen-Investments/Financial-Ca
 Please refer to this code (https://github.com/Evergreen-Investments/Financial-Calculations/blob/main/Calc_Update_CRM)
 ![image](https://user-images.githubusercontent.com/124835926/222197183-fcf1ea71-d544-4b29-90c3-b4d4cf2fb653.png)
 
+4.Then in order to populate the property database module in the CRM we created a function that moves all values
+from the formula fields to single line fields
+Please refer to this code ()
+![image](https://user-images.githubusercontent.com/124835926/222198968-c580a22b-1941-4410-ad23-c462cbbf4b11.png)
+
+
 ## Diagrams
 ![image](https://user-images.githubusercontent.com/124835926/222197348-4e4345c7-dee7-4b3c-8778-b48abf006c9a.png)
 ![image](https://user-images.githubusercontent.com/124835926/222197466-5d7634f1-e18c-45d5-8521-38966a9513e3.png)
