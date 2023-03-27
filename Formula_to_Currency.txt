@@ -1,0 +1,29 @@
+//Gets Records from Property Database
+Recs = zoho.crm.getRecordById("PropertyDatabase",Property_ID);
+//Gets Cap Rate Single Line
+Cap = Recs.get("Cap_Rate2");
+//Gets Max Bid Rental STR Formula Field
+ListingPrice = Recs.get("Listing_Price");
+//Gets Max Bid Rental STR Formula Field
+BidRental = Recs.get("MaxBidRentalSTR2");
+//Gets Max Bid Builder Formula Field
+BidRenovator = Recs.get("MaxBidRenovator70Round");
+//Gets Max Bid Renovator Formula Field
+BidBuilder = Recs.get("MaxBidBuilderRound2");
+//Gets Owner User Formula Field
+BidOwner = Recs.get("MV_Minus_Repairs_Repairs_Round");
+//Gets Move Fields
+MoveFields = Recs.get("Move_Fields");
+if(MoveFields == "Yes")
+{
+	move = Map();
+	No_Moving = "No";
+	move.put("Cap_Rate",Cap);
+	move.put("Listing_Price2",ListingPrice);
+	move.put("MaxBidRentalSTR3",BidRental);
+	move.put("MaxBidBuilderRound",BidBuilder);
+	move.put("MaxBidRenovator",BidRenovator);
+	move.put("OwnerUserRound3",BidOwner);
+	move.put("Move_Fields",No_Moving);
+	Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,move,{"trigger":{"workflow"}});
+}
