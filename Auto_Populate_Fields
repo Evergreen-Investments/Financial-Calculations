@@ -1,70 +1,105 @@
-if(Name != Null)
+related_record = New_Property_Analysis[ID == input.Name];
+Property_Profile_Type = related_record.Property_Profile_Type;
+input.Square_Feet = related_record.Square_Feet;
+input.Asking_Price = related_record.Asking_Price;
+input.Resale_Value = related_record.Resale_Value;
+input.Rental_Value = related_record.Rental_Value;
+input.Listing_Price = related_record.Listing_Price;
+input.Rehab_Estimate = related_record.Rehab_Estimate;
+input.Rehab_Level_per_Sqft = related_record.Rehab_Level_per_Sqft;
+input.STRDailyValue = related_record.STRDailyValue;
+input.STROccupancyPercentage = related_record.STROccupancyPercentage;
+input.Year_Built = related_record.Year_Built;
+input.NOI = related_record.NOI;
+input.PropertyDatabase_Record = related_record.PropertyDatabase_Record;
+input.CRM_Property_ID = related_record.CRM_Property_ID;
+if(input.Rehab_Estimate != null)
 {
-	related_record = New_Property_Analysis[ID == input.Name];
-	input.Property_Type = related_record.Property_Type;
-	input.Square_Feet = related_record.Square_Feet;
-	input.Asking_Price = related_record.Asking_Price;
-	input.Resale_Value = related_record.Resale_Value;
-	input.Rental_Value = related_record.Rental_Value;
-	input.Rehab_Estimate = related_record.Rehab_Estimate;
-	input.Rehab_Level_per_Sqft = related_record.Rehab_Level_per_Sqft;
-	input.STRDailyValue = related_record.STRDailyValue;
-	input.STROccupancyPercentage = related_record.STROccupancyPercentage;
-	input.Year_Built = related_record.Year_Built;
-	input.NOI = related_record.NOI;
-	input.PropertyDatabase_Record = related_record.PropertyDatabase_Record;
-	input.CRM_Property_ID = related_record.CRM_Property_ID;
-	//Listing Price Calculation
-	if(input.Asking_Price >= 101000)
+	//Conservative Net to Seller
+	conList = list();
+	if(input.Resale_Value > 151000)
 	{
-		input.Asking_Price = related_record.Asking_Price;
-		listing = input.Asking_Price * 1.04;
-		input.Listing_Price = listing;
+		con1 = ceil((input.Resale_Value * 0.020) / 1000) * 1000;
+		conList.add(con1);
+		con2 = ceil((.70 * input.Resale_Value - input.Rehab_Estimate) / 1000) * 1000;
+		conList.add(con2);
 	}
-	else if(input.Asking_Price < 101000)
+	if(input.Rehab_Estimate < 25000)
 	{
-		input.Asking_Price = related_record.Asking_Price;
-		listing = input.Asking_Price + 5000;
-		input.Listing_Price = listing;
+		con3 = ceil((input.Resale_Value - input.Rehab_Estimate) / 1000) * 1000;
+		conList.add(con3);
 	}
-	//Max Bid builder
-	builder = (.2 * input.Resale_Value) / (1.07 * input.Asking_Price) * 100000;
+	if(input.Rehab_Estimate < 51000)
+	{
+		con4 = ceil((input.Rental_Value * 12 * .10 - input.Rehab_Estimate) / 1000) * 1000;
+		conList.add(con4);
+	}
+	if(input.Rehab_Estimate < 81000)
+	{
+		con5 = ceil(((input.Rental_Value * 12) / .12 - input.Rehab_Estimate) / 1000) * 1000;
+		conList.add(con5);
+	}
+	if(input.Rehab_Estimate < 51000)
+	{
+		con6 = ceil(((input.STRDailyValue * 180) / .07 - input.Rehab_Estimate) / 1000) * 1000;
+		conList.add(con6);
+	}
+	maxVal1 = ceil((conList.largest() * .96) / 1000) * 1000;
+	maxVal2 = ceil((conList.largest() - 5000) / 1000) * 1000;
+	input.MaxBidWholesalerRound = min(maxVal1,maxVal2);
+}
+if(input.Resale_Value != null)
+{
+	//Max Bid builder ** 20% of resale value, doesn't need to be divided by asking price - Done
+	builder = ceil((.2 * input.Resale_Value) / 1000) * 1000;
 	input.MaxBidBuilderRound = builder;
-	//Max bid rennovator
-	renovator = (input.Rehab_Estimate + 1.07 * input.Asking_Price) / input.Resale_Value * 100000;
+}
+if(input.Resale_Value != null && input.Rehab_Estimate != null)
+{
+	//Max bid rennovator ** 70% of resale value minus est rehab - Done
+	renovator = ceil((.7 * input.Resale_Value - input.Rehab_Estimate) / 1000) * 1000;
 	input.MaxBidRenovator = renovator;
-	//Gross rental Yield
-	Yield = abs((12 * input.Rental_Value - input.Rehab_Estimate) / input.Listing_Price);
+	//Owner User Round
+	if(input.Rehab_Estimate < 0.2 * input.Resale_Value)
+	{
+		owner = ceil((input.Resale_Value - input.Rehab_Estimate) / 1000) * 1000;
+		input.MV_Minus_Repairs_Repairs_Round = owner;
+	}
+	else
+	{
+		input.MV_Minus_Repairs_Repairs_Round = 0;
+	}
+}
+//Gross rental Yield ** annual trad rent divided by list price plus rehab - Done
+if(input.Rental_Value != null && input.Listing_Price != null && input.Rehab_Estimate != null)
+{
+	Yield = abs((12 * input.Rental_Value) / input.Listing_Price + input.Rehab_Estimate) / 10000;
 	input.Trad_Gross_Rental_Yield = Yield;
-	//Short-Term Rental GrossYield
+}
+//Short-Term Rental GrossYield** annual str rent divided by list price plus rehab
+if(input.STRDailyValue != null && input.STROccupancyPercentage != null && input.Rehab_Estimate != null && input.Listing_Price != null)
+{
 	sRental = (input.STROccupancyPercentage * 365 * input.STRDailyValue - input.Rehab_Estimate) / input.Listing_Price;
 	input.Short_Term_Gross_Yield = sRental;
-	//Max Bid Rental STR
-	if(input.Asking_Price >= 101000)
-	{
-		var = 365 * input.STROccupancyPercentage;
-		var2 = 1.07 * input.Asking_Price;
-		strCalc = var * input.STRDailyValue;
-		strCalc2 = input.Rehab_Estimate + var2;
-		Rental = ceil(strCalc / strCalc2 * 1000000);
-		input.MaxBidRentalSTR = Rental;
-	}
-	else if(input.Asking_Price < 101000)
-	{
-		var = 365 * input.STROccupancyPercentage;
-		var2 = 1.07 * input.Asking_Price;
-		strCalc = var * input.STRDailyValue;
-		strCalc2 = input.Rehab_Estimate + var2;
-		Rental = ceil(strCalc / strCalc2 * 100000);
-		input.MaxBidRentalSTR = Rental;
-	}
-	//NOI Calculation
-	if(input.NOI != null)
-	{
-		rate = input.NOI / input.Listing_Price;
-		input.Cap_Rate = rate;
-	}
+}
+if(input.Rental_Value != null && input.Rehab_Estimate != null)
+{
+	//Max Bid Rental STR ** annual STR rent divided by 9% minus rehab - Done
+	strCalc = (12 * input.Rental_Value) / 0.09 - input.Rehab_Estimate;
+	Rental = ceil(strCalc / 1000) * 1000;
+	input.MaxBidRentalSTR = Rental;
+}
+if(input.Listing_Price != null && input.Rehab_Estimate != null && input.Resale_Value != null)
+{
 	//All in arv
 	calcARV = (input.Listing_Price + input.Rehab_Estimate) / input.Resale_Value;
 	input.All_in_2_ARV = calcARV;
 }
+if(input.NOI != null)
+{
+	//NOI Calculation
+	rate = input.NOI / input.Listing_Price;
+	input.Cap_Rate = rate;
+}
+info related_record;
+// Trad rental ** annual Trad rent divided by 9% minus rehab, say 1800 rent * 12 / 9% minus rehab
